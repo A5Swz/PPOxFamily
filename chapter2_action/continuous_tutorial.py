@@ -36,13 +36,13 @@ class ContinuousPolicyNetwork(nn.Module):
         # $$ y = max(W_2 max(W_1x+b_1, 0) + b_2, 0)$$
         self.encoder = nn.Sequential(
             nn.Linear(obs_shape, 16),
-            nn.ReLU(),
+            nn.Sigmoid(),
             nn.Linear(16, 32),
-            nn.ReLU(),
+            nn.Sigmoid(),
         )
         # Define mu module, which is a FC and outputs the argument mu for gaussian distribution.
         # $$ \mu = Wx + b $$
-        self.mu = nn.Linear(32, action_shape)
+        self.mu = nn.Linear(32, action_shape, bias=false)
         # Define log_sigma module, which is a learnable parameter but independent to state.
         # Here we set it as log_sigma for the convenience of optimization and usage. You can also adjust its initial value for your demands.
         # $$\sigma = e^w$$
